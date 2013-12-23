@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    .container
+        .row
+            h1 Login
+        
+        .row
+            form.form-inline(id='form', method='post', action='/login', role='form')
+                .form-group.col-lg-4
+                    label(for='username') Username:
+                    input.form-control(name='username', type='text')
+                    label(for='password') Password:
+                    input.form-control(name='password', type='password')
+                .form-group.col-lg-1     
+                    button.btn.btn-success.text-center(type='submit') Login

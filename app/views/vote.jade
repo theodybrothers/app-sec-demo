@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    .container
+        .row
+            h1 Who is the best?
+            
+        .row
+            form.form-inline(id='form', method='post', action='/vote', role='form')
+                .form-group.col-lg-4
+                    input(name='vote', type='radio', value='SF')
+                    &nbsp;San Fransisco 49ers&nbsp;&nbsp;&nbsp;&nbsp;
+                    input(name='vote', type='radio', value='SEA')
+                    &nbsp;Seattle Seahawks
+                
+                .form-group.col-lg-1 
+                    button.btn.btn-success.text-center(type='submit') Vote

@@ -1,0 +1,20 @@
+{
+  "name": "app-sec-demo",
+  "version": "0.1.0",
+  "author" : "theodybrothers",
+  "description": "Demonstration of various web application security vulnerabilities",
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/theodybrothers/app-sec-demo.git"
+  },
+  "dependencies": {
+    "express": ">=3.x",
+    "jade": ">=0.33.x",
+    "byline": ">=4.x",
+    "node-uuid": ">=1.x"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  }
+}
