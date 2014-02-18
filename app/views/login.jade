@@ -1,16 +1,14 @@
 extends layout
 
 block content
-    .container
-        .row
-            h1 Login
-        
-        .row
-            form.form-inline(id='form', method='post', action='/login', role='form')
-                .form-group.col-lg-4
-                    label(for='username') Username:
-                    input.form-control(name='username', type='text')
-                    label(for='password') Password:
-                    input.form-control(name='password', type='password')
-                .form-group.col-lg-1     
-                    button.btn.btn-success.text-center(type='submit') Login
+	.container
+		form.form-signin.well(id='form', method='post', action='/login', role='form')
+			h2.form-signin-heading Sign in to continue
+
+			input.form-control(name='username', type='text', placeholder='Username' required autofocus)
+			input.form-control(name='password', type='password', placeholder='Password')
+			label.checkbox
+				input(name='remember', type='checkbox', value='yes')
+				span Stay signed in
+			
+			button.btn.btn-lg.btn-success.btn-block(type='submit') Sign in

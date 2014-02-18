@@ -32,13 +32,14 @@ var authenticate = function(req, res, next) {
 app.configure(function() {
     app.set('view engine', 'jade');
     app.set('views', __dirname + '/views');
-    //app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.urlencoded());
     app.use(express.cookieParser());
     app.use(express.session({ secret: '{my_session_secret}' }));
     app.use(app.router); //Enable error handling
     app.use(notFoundHandler); //If no routes match, this will be called
     app.use(errorHandler); //Express knows a method with 4 params, is for handling errors
+    app.locals.pretty = true;
 });
 
 app.get('/', function (req, res) {
@@ -52,6 +53,7 @@ app.get('/vote', authenticate, function (req, res) {
     res.render('vote');
 });
 app.post('/vote', authenticate, controller.vote);
+app.get('/clear-votes', controller.clearVotes);
 app.get('/results', controller.results);
 app.get('/vote-safe', authenticate, function (req, res) {
     
@@ -61,6 +63,8 @@ app.get('/vote-safe', authenticate, function (req, res) {
     res.render('vote-safe', { csrfToken: token });
 });
 app.post('/vote-safe', authenticate, controller.voteSafe);
+app.get('/vote-search', controller.voteSearch);
+app.get('/vote-search-safe', controller.voteSearchSafe);
 
 app.listen(process.env.PORT, process.env.IP);
-console.log('csrf-demo running...');
+console.log('App-Sec demo running...');

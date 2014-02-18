@@ -1,0 +1,39 @@
+﻿extends layout
+
+block content
+	.container
+		.row
+			h1 Search Votes
+
+		.row.form-inline
+				.form-group.col-lg-4
+					input.form-control(id='username', type='text', placeholder='Username', value='#{username}' required)
+			
+				.form-group.col-lg-1
+					button.btn.btn-success.text-center(type='button', onclick='search()') Search
+
+		if (username != '')
+			.row
+				h3 You searched for 
+					b !{username}
+
+		if (votes != null && votes.length == 0)
+			.row
+				span No votes found for the specified username
+
+		if (votes != null && votes.length > 0)
+			.row.col-lg-7.col-md-7
+				table.table.table-striped
+						tbody
+							each vote in votes
+								tr
+									td.col-lg-3.col-md-3 #{vote.date}
+									td.col-lg-2.col-md-2 #{vote.username}
+									td.col-lg-2.col-md-2 #{vote.vote}
+
+		script.
+			var search = function () {
+				var element = document.getElementById('username');
+
+				window.location = './vote-search?username=' + element.value;
+			};

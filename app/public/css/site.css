@@ -1,0 +1,9 @@
+﻿.form-signin {
+    margin: 30px auto 0 auto;
+    max-width: 330px;
+    padding: 15px;
+}
+
+.form-signin h2 {
+    margin-top: 5px;
+}

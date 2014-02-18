@@ -33,6 +33,13 @@ exports.voteSafe = function (req, res) {
     res.redirect('/results');
 };
 
+exports.clearVotes = function (req, res) {
+
+	fs.truncate(votesFilePath, 0, function () {
+		res.send("Votes cleared.");
+	});
+};
+
 exports.results = function (req, res) {
     var stream = fs.createReadStream(votesFilePath);
     stream = byline.createStream(stream);
@@ -66,6 +73,16 @@ exports.results = function (req, res) {
     });
 };
 
+exports.voteSearch = function (req, res) {
+    
+    searchVotes(req, res, 'vote-search');
+};
+
+exports.voteSearchSafe = function (req, res) {
+
+    searchVotes(req, res, 'vote-search-safe');
+};
+
 var saveVote = function (req) {
     
     var now = new Date();
@@ -86,4 +103,41 @@ var isCrsfTokenPresent = function (req) {
 var isCrsfTokenValid = function (req) {
     
     return (req.body.csrfToken == req.cookies.csrfToken);
+};
+
+var searchVotes = function(req, res, viewName) {
+        
+    var username = req.query.username || '';
+    var viewModel = {
+        username: username
+    };
+    
+    if (username != '') {
+
+        var stream = fs.createReadStream(votesFilePath);
+        stream = byline.createStream(stream);
+
+        var votes = [];
+    
+        stream.on('data', function (line) {
+            var fields = line.toString().split('\t');
+        
+            if (username.toLowerCase() == fields[1].toLowerCase()) {
+                var vote = {
+                    date: fields[0],
+                    username: fields[1],
+                    vote: fields[2]
+                };
+                votes.push(vote);
+            }
+        });
+
+        stream.on('end', function () {
+            viewModel.votes = votes;
+    
+            res.render(viewName, viewModel);
+        });
+    } else {
+        res.render(viewName, viewModel);
+    }
 };
